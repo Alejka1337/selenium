@@ -1,0 +1,9 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[packages]]
+selenium= "4.11.2"
+pytz= "2022.7"
+pipenv= "2023.8.22"
