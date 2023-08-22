@@ -10,16 +10,16 @@ LOGIN_URL = os.environ.get('LOGIN_URL')
 USERNAME = os.environ.get('USERNAME')
 PASSWORD = os.environ.get('PASSWORD')
 TIMEZONE = pytz.timezone('Europe/Kiev')
+CHROMEDRIVER_PATH = os.environ.get('CHROMEDRIVER_PATH')
 
 chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument(f'--chromedriver-executable={CHROMEDRIVER_PATH}')
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 
-driver = webdriver.Chrome(
-    executable_path=os.environ.get('CHROMEDRIVER_PATH'),
-    options=chrome_options)
+driver = webdriver.Chrome(options=chrome_options)
 
 
 while True:
@@ -28,6 +28,7 @@ while True:
     end_time = current_time.replace(hour=9, minute=0, second=0, microsecond=0) + timedelta(days=1)
 
     if start_time <= current_time <= end_time:
+        print(f'Пробую авторизироваться {datetime.now()}')
         try:
             # Открыть страницу для авторизации
             driver.get(LOGIN_URL)
@@ -64,4 +65,7 @@ while True:
             driver.quit()
 
     else:
+        time.sleep(10)
+        print(f'Поспал {datetime.now()}')
         continue
+
