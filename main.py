@@ -19,8 +19,6 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 
-driver = webdriver.Chrome(options=chrome_options)
-
 
 while True:
     current_time = datetime.now(TIMEZONE)
@@ -29,6 +27,8 @@ while True:
 
     if start_time <= current_time <= end_time:
         print(f'Пробую авторизироваться {datetime.now()}')
+        driver = webdriver.Chrome(options=chrome_options)
+
         try:
             # Открыть страницу для авторизации
             driver.get(LOGIN_URL)
