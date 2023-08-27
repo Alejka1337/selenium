@@ -22,6 +22,12 @@ chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 
 while True:
     current_time = datetime.now(TIMEZONE)
+    target_time = TIMEZONE.localize(datetime(
+        current_time.year,
+        current_time.month,
+        current_time.day,
+        18, 0, 0)
+    )
     day_of_week = current_time.weekday()  # 0 for Monday, 6 for Sunday
 
     # Проверяем, если сейчас пятница
@@ -33,11 +39,12 @@ while True:
     else:
         # Если не пятница, ждем до 18:00
         if current_time.hour < 18:
-            time_to_wait = datetime(current_time.year, current_time.month, current_time.day, 18, 0, 0) - current_time
+            time_to_wait = target_time - current_time
             time.sleep(time_to_wait.total_seconds())
 
     while (day_of_week < 5 and current_time.hour >= 18) or \
-            (day_of_week == 4 and current_time.hour >= 18):
+            (day_of_week == 5) or \
+            (day_of_week == 6):
         print(f'Пробую авторизироваться {datetime.now()}')
         driver = webdriver.Chrome(options=chrome_options)
 
